@@ -4,8 +4,8 @@ type ProductType = {
         stock: number;
         price: number;
         profit: number;
-        createdDate: Date;
-        updateDate: Date;
+        createdDate: string;
+        updateDate: string;
         isOut: string;
         img: string;
 }

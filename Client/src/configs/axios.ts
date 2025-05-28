@@ -1,12 +1,13 @@
 import axios from "axios";
 import type { AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import Cookies from "js-cookie";
 
 axios.defaults.baseURL = 'http://localhost:5164/api/';
 
 // Add a request interceptor
 axios.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem('template-app-token'); // Assuming the token is stored in localStorage
+    const token = Cookies.get('template-app-token'); // Assuming the token is stored in localStorage
     if (token) {
       config.headers!.Authorization = `Bearer ${token}`;
     }

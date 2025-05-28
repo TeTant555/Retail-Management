@@ -1,13 +1,14 @@
 import { Outlet } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import useAuth from '@/hooks/useAuth';
 
 const DefaultLayout = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    const token = localStorage.getItem('template-app-token')
-    if (!token) {
+    if (!isAuthenticated) {
       navigate('/login', { replace: true })
     }
   }, [navigate])

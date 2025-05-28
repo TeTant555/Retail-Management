@@ -8,9 +8,9 @@ import { Label } from "@/components/ui/label";
 import { useDispatch } from "react-redux";
 import api from "@/api";
 import { hideLoader, openLoader } from "@/store/features/loaderSlice";
-import { setStoreEmail } from "@/store/features/auth";
+import { setUserData } from "@/store/features/authSlice";
 import { toast } from "sonner";
-import { setOtp } from "@/store/features/verify";
+import { setOtp } from "@/store/features/verifySlice";
 
 export function RegisterForm({
   className,
@@ -68,13 +68,16 @@ export function RegisterForm({
           }
         })
       } else {
-      dispatch(setStoreEmail(data.email));
+      const payload = {
+        email: data.email,
+        userId: data.userID, // Assuming userId is returned from the API
+      };
+      dispatch(setUserData(payload));
       dispatch(setOtp(data.otp));
       navigate("/login/otp", { replace: true });
       }
     },
     onError: (error) => {
-      console.error(error);
       console.error("Error during registration:", error);
     },
     onSettled: () => {

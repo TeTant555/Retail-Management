@@ -1,4 +1,4 @@
-import Items from "@/components/product-page"
+import Items from "@/modules/product/chunks/Items"
 import { Footer } from "@/components/footer"
 
 const Product = () => {

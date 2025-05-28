@@ -3,6 +3,8 @@ import * as login from "./login";
 import * as register from "./register";
 import * as otp from "./otp";
 import * as product from "./product";
+import * as order from "./order";
+import * as history from "./history";
 
 class API {
 	todos: typeof todos;
@@ -10,6 +12,8 @@ class API {
 	register: typeof register;
 	otp: typeof otp;
 	product: typeof product;
+	order: typeof order;
+	history: typeof history;
 
 	constructor() {
 		this.todos = todos;
@@ -17,6 +21,8 @@ class API {
 		this.register = register;
 		this.otp = otp;
 		this.product = product;
+		this.order = order;
+		this.history = history;
 	}
 }
 

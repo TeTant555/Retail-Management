@@ -1,4 +1,4 @@
-import Wrapper from "./components/Wrapper";
+import Wrapper from "@/components/Wrapper"; 
 import "@/configs/locale";
 import "@/configs/axios";
 

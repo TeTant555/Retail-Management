@@ -1,4 +1,4 @@
-import { Home, UsersRound, ShoppingCart, PackageSearch } from "lucide-react"
+import { Home, ShoppingCart, PackageSearch, History } from "lucide-react"
 import { Link } from "react-router-dom" 
 
 import {
@@ -26,14 +26,14 @@ const items = [
   },
   {
     title: "Cart",
-    url: "#",
+    url: "/cart",
     icon: ShoppingCart,
   },
   {
-    title: "About Us",
-    url: "/about",
-    icon: UsersRound,
-  }
+    title: "History",
+    url: "/history",
+    icon: History,
+  },
 ]
 
 export function AppSidebar() {

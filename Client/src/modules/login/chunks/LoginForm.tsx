@@ -9,11 +9,14 @@ import api from "@/api";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { hideLoader, openLoader } from "@/store/features/loaderSlice";
+import useAuth from "@/hooks/useAuth";
+import { setUserData } from "@/store/features/authSlice";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+  const { userLogin } = useAuth(); 
   const [showPassword, setShowPassword] = useState(false);
 
   // Chunk
@@ -40,8 +43,12 @@ export function LoginForm({
       dispatch(openLoader());
     },
     onSuccess: (data) => {
-      console.log(data);
-      localStorage.setItem("template-app-token", data.token);
+      const payload = {
+        userId: data.userId,
+        email: data.email,
+      };
+      dispatch(setUserData(payload));
+      userLogin(data.token);
       navigate("/", { replace: true });
     },
     onError: (error) => {

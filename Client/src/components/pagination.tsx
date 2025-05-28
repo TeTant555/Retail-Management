@@ -64,7 +64,7 @@ const ProductPagination = ({
           return (
             <PaginationItem key={p}>
               <PaginationLink
-                className="montserrat text-gray-400"
+                className="montserrat border-pri text-gray-400"
                 href="#"
                 isActive={p === currentPage}
                 onClick={e => {

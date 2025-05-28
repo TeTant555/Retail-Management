@@ -77,6 +77,12 @@ const OTP = () => {
     },
   });
 
+  // Add onChange handler to ensure only numbers are entered
+  const handlePinChange = (value: string) => {
+    const numericValue = value.replace(/[^0-9]/g, '');
+    form.setValue('pin', numericValue);
+  };
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
     if (Number(data.pin) == verifyotp) {
       verifyOtp({
@@ -84,6 +90,7 @@ const OTP = () => {
         otp: Number(data.pin),
       });
     } else {
+      form.reset({ pin: "" });
       toast("OTP Error", {
         description: "The code you entered is incorrect",
         action: {
@@ -126,31 +133,42 @@ const OTP = () => {
                   Email Verification
                 </FormLabel>
                 <FormControl>
-                  <InputOTP maxLength={6} {...field}>
+                  <InputOTP 
+                    maxLength={6} 
+                    {...field}
+                    onChange={(value) => handlePinChange(value)}
+                    inputMode="numeric"
+                  >
                     <InputOTPGroup className="border-1 border-pri">
                       <InputOTPSlot
                         className="p-5 text-sec border-1 border-pri"
                         index={0}
+                        inputMode="numeric"
                       />
                       <InputOTPSlot
                         className="p-5 text-sec border-1 border-pri"
                         index={1}
+                        inputMode="numeric"
                       />
                       <InputOTPSlot
                         className="p-5 text-sec border-1 border-pri"
                         index={2}
+                        inputMode="numeric"
                       />
                       <InputOTPSlot
                         className="p-5 text-sec border-1 border-pri"
                         index={3}
+                        inputMode="numeric"
                       />
                       <InputOTPSlot
                         className="p-5 text-sec border-1 border-pri"
                         index={4}
+                        inputMode="numeric"
                       />
                       <InputOTPSlot
                         className="p-5 text-sec border-1 border-pri"
                         index={5}
+                        inputMode="numeric"
                       />
                     </InputOTPGroup>
                   </InputOTP>

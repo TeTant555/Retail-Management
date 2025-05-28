@@ -1,7 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 interface Hero1Props {
   badge?: string;
@@ -23,22 +23,22 @@ interface Hero1Props {
   };
 }
 
-const Hero1 = ({
+const Hero = ({
   badge = "✨ Your eCommerce Platform",
   heading = "Blocks Built With Shadcn & Tailwind",
   description = "Finely crafted components built with React, Tailwind and Shadcn UI. Developers can copy and paste these blocks directly into their project.",
   buttons = {
     primary: {
       text: "Discover all products",
-      url: "https://www.shadcnblocks.com",
+      url: "/product",
     },
     secondary: {
       text: "About us",
-      url: "https://www.shadcnblocks.com",
+      url: "/about",
     },
   },
   image = {
-    src: "https://www.shadcnblocks.com/images/block/placeholder-1.svg",
+    src: "http://localhost:5173/src/assets/streetwearposter.jpg",
     alt: "Hero section demo image showing interface components",
   },
 }: Hero1Props) => {
@@ -62,14 +62,12 @@ const Hero1 = ({
             <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
               {buttons.primary && (
                 <Button asChild className="w-full sm:w-auto bg-pri text-black montserrat rounded hover:bg-pri/80">
-                  <a href={buttons.primary.url}>{buttons.primary.text}</a>
+                  <Link to={buttons.primary.url}>{buttons.primary.text}</Link>
                 </Button>
               )}
               {buttons.secondary && (
                 <Button asChild variant="outline" className="w-full sm:w-auto border-2 border-txt hover:border-txt/80 hover:text-txt/80 montserrat rounded">
-                  <a href={buttons.secondary.url}>
-                    {buttons.secondary.text}
-                  </a>
+                  <Link to={buttons.secondary.url}>{buttons.secondary.text}</Link>
                 </Button>
               )}
             </div>
@@ -85,4 +83,4 @@ const Hero1 = ({
   );
 };
 
-export { Hero1 };
+export { Hero };

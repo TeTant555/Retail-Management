@@ -1,18 +1,19 @@
-import FeaturesSection from "@/components/FeatureSection"
-import NewArrival from "@/components/NewArrival"
-import { Hero1 } from "@/components/hero"
-import Shopping from "@/assets/shopping.jpg" // Import the image
+import FeaturesSection from "@/modules/home/chunks/FeatureSection"
+import NewArrival from "@/modules/home/chunks/NewArrival"
+import { Hero } from "@/modules/home/chunks/Hero"
+import Poster from "@/assets/shopping.jpg" // Import the image
 import { Footer } from "@/components/footer"
 
 const Home = () => {
+
     return (
         <>
             <div>
-                <Hero1
+                <Hero
                     heading="Welcome to Our Online Shoping Store"
                     description="Discover the latest arrivals and exclusive features."
                     image={{
-                        src: Shopping,
+                        src: Poster,
                         alt: "Shopping image",
                     }}
                     // Add other required props like 'badge' and 'buttons' if needed
