@@ -1,5 +1,5 @@
-import { Home, ShoppingCart, PackageSearch, History } from "lucide-react"
-import { Link } from "react-router-dom" 
+import { Home, ShoppingCart, PackageSearch, History, LogOut } from "lucide-react"
+import { Link, useNavigate } from "react-router-dom" 
 
 import {
   Sidebar,
@@ -11,6 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import Cookies from "js-cookie";
 
 // Menu items.
 const items = [
@@ -34,9 +35,20 @@ const items = [
     url: "/history",
     icon: History,
   },
+  {
+    title: "Logout",
+    url: "/login",
+    icon: LogOut,
+  }
 ]
 
 export function AppSidebar() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    Cookies.remove("template-app-token");
+    navigate("/login", { replace: true });
+  }
+
   return (
     <Sidebar>
       <SidebarContent className="bg-bgu">
@@ -46,11 +58,20 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton className="hover:bg-black active:bg-black" asChild>
-                    <Link className="!text-pri montserrat" to={item.url}>
-                      <item.icon />
-                      <span className="text-txt">{item.title}</span>
-                    </Link>
+                  <SidebarMenuButton className="hover:bg-black active:bg-black"
+                  asChild={item.title !== "Logout"}
+                  onClick={item.title === "Logout" ? handleLogout : undefined}>
+                  {item.title === "Logout" ? (
+                    <span className="!text-pri montserrat flex items-center gap-2 cursor-pointer">
+                        <item.icon />
+                        <span className="text-txt">{item.title}</span>
+                      </span>
+                    ) : (
+                      <Link className="!text-pri montserrat" to={item.url}>
+                        <item.icon />
+                        <span className="text-txt">{item.title}</span>
+                      </Link>
+                    )}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

@@ -33,8 +33,8 @@ const Hero = ({
       url: "/product",
     },
     secondary: {
-      text: "About us",
-      url: "/about",
+      text: "View cart",
+      url: "/cart",
     },
   },
   image = {

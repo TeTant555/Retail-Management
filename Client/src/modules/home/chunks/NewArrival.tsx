@@ -53,8 +53,11 @@ const NewArrival = () => {
   const latestProducts = sortedProducts.slice(0, 8);
 
   // State and redux store
+  const cart = useAppSelector((state) => state.cart.items);
   const userId = useAppSelector((state) => state.auth.userId);
   const handleAddToCart = (product: Product) => {
+    const exists = cart.some((item) => item.productId === product.productId);
+    if (exists) return; // Prevent dispatching
     dispatch(
       addToCart({
         productId: product.productId,
@@ -63,7 +66,7 @@ const NewArrival = () => {
         quantity: 1,
         img: product.img,
         orderDate: new Date(),
-        userId: userId
+        userId: userId,
       })
     );
     toast.success("Added to cart successfully!", {
@@ -74,7 +77,7 @@ const NewArrival = () => {
         actionButton: "!bg-pri !text-black",
       },
     });
-  };
+    };
 
   // Show skeletons while loading
   if (isLoading) {
@@ -132,14 +135,16 @@ const NewArrival = () => {
                   style={{ aspectRatio: "600/400", objectFit: "cover" }}
                 />
               </CardContent>
-              <CardHeader className="text-txt text-nowrap montserrat text-sm font-semibold">
-                {product.name}
+              <CardHeader className="text-txt text-wrap montserrat text-sm font-semibold">
+                <div className="line-clamp-2 min-h-[2.5em]">{product.name}</div>
               </CardHeader>
               <CardFooter className="text-gray-400 flex justify-between crimson-pro text-lg">
                 <p>{product.price} MMK</p>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button className="bg-black montserrat text-xs font-semibold text-pri border-2 border-pri hover:bg-pri hover:text-black transition-colors duration-300">
+                    <Button 
+                    disabled={product.stock === 0}
+                    className="bg-black montserrat text-xs font-semibold text-pri border-2 border-pri hover:bg-pri hover:text-black transition-colors duration-300">
                       Add to cart
                     </Button>
                   </DialogTrigger>
@@ -168,6 +173,7 @@ const NewArrival = () => {
                         </Button>
                       </DialogClose>
                       <Button 
+                        disabled={cart.some((item) => item.productId === product.productId)}
                         className="w-23 bg-black montserrat text-xs font-semibold text-pri border-2 border-pri hover:bg-pri hover:text-black transition-colors duration-300"
                         onClick={() => handleAddToCart(product)}
                       >

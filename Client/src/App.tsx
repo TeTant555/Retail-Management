@@ -1,6 +1,4 @@
-import Wrapper from "@/components/Wrapper"; 
-import "@/configs/locale";
-import "@/configs/axios";
+import Wrapper from "./components/wrapper";
 
 const App = () => {
     return <Wrapper/>;

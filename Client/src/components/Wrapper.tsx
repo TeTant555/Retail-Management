@@ -15,6 +15,7 @@ import Loader from './loader';
 import Cart from '@/modules/cart/Cart';
 import { PersistGate } from 'redux-persist/integration/react';
 import History from '@/modules/history/History';
+import AuthRedirect from './AuthRedirect';
 
 const router = createBrowserRouter([
     {
@@ -23,7 +24,11 @@ const router = createBrowserRouter([
         children: [
             {
                 path: 'login',
-                element: <Login />,
+                element: (
+                <AuthRedirect>
+                    <Login />
+                </AuthRedirect>
+                ),
                 children: [
                     {
                         path: '',

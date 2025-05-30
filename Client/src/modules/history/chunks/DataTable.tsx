@@ -110,18 +110,18 @@ export const columns: ColumnDef<HistoryType>[] = [
 ]
 
 export function DataTable() {
+
+  // State and API
   const userId = useAppSelector((state) => state.auth.userId)
   const { data: history = [] } = api.history.getById.useQuery(userId)
 
-  React.useEffect(() => {
-    console.log("History", history)
-  }, [history])
-
+  // Sorting
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
 
+  // Table optimiation
   const table = useReactTable({
     data: history,
     columns,
@@ -225,11 +225,7 @@ export function DataTable() {
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm montserrat">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
+      <div className="flex items-center justify-center space-x-2 py-4">
         <div className="space-x-2">
           <Button
             className="text-pri p-2 font-semibold border-pri border-2 montserrat hover:bg-pri hover:text-black transition-colors duration-300"
