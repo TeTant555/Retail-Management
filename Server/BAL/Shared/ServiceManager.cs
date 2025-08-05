@@ -18,11 +18,20 @@ namespace BAL.Shared
     {
         public static void SetServiceInfo(IServiceCollection services, AppSettings appSettings)
         {
+            // Debug: Check if appSettings and ConnectionStrings are populated
+            Console.WriteLine($"AppSettings is null: {appSettings == null}");
+            Console.WriteLine($"ConnectionStrings value: '{appSettings?.ConnectionStrings}'");
+            Console.WriteLine($"LocalTestUrl value: '{appSettings?.LocalTestUrl}'");
+
+            if (string.IsNullOrEmpty(appSettings?.ConnectionStrings))
+            {
+                throw new InvalidOperationException("ConnectionStrings is null or empty in AppSettings");
+            }
+
             services.AddDbContextPool<DataContext>(options =>
             {
                 options.UseSqlServer(appSettings.ConnectionStrings);
             });
-
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IProductService, ProductService>();

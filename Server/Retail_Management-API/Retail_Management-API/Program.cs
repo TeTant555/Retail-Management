@@ -17,7 +17,12 @@ var appSettings = new AppSettings();
 // Add services to the container.
 
 builder.Services.AddControllers();
+// This line must come BEFORE SetServiceInfo
 builder.Configuration.GetSection("AppSettings").Bind(appSettings);
+
+// Add this debug line temporarily
+Console.WriteLine($"Bound ConnectionStrings: '{appSettings.ConnectionStrings}'");
+
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 ServiceManager.SetServiceInfo(builder.Services, appSettings);
 builder.Services.AddControllers();
