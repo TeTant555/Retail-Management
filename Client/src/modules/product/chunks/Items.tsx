@@ -74,7 +74,7 @@ const Items = () => {
     <div className="pb-12 pt-5">
       <nav className="flex justify-between mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-3xl crimson-pro text-pri">Products</div>
-        <Button className="montserrat">Stock: {products?.length}</Button>
+        <Button className="montserrat">Stock: {paginatedData?.length}</Button>
       </nav>
       <div className="relative mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 mt-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -132,13 +132,15 @@ const Items = () => {
                           Close
                         </Button>
                       </DialogClose>
-                      <Button 
-                        disabled={cart.some((item) => item.productId === product.productId)}
-                        className="w-23 bg-black montserrat text-xs font-semibold text-pri border-2 border-pri hover:bg-pri hover:text-black transition-colors duration-300"
-                        onClick={() => handleAddToCart(product)}
-                      >
-                        Confirm
-                      </Button>
+                      <DialogClose>
+                        <Button 
+                          disabled={cart.some((item) => item.productId === product.productId)}
+                          className="w-23 bg-black montserrat text-xs font-semibold text-pri border-2 border-pri hover:bg-pri hover:text-black transition-colors duration-300"
+                          onClick={() => handleAddToCart(product)}
+                        >
+                          Confirm
+                        </Button>
+                      </DialogClose>
                     </DialogFooter>
                   </DialogContent>
                 </Dialog>

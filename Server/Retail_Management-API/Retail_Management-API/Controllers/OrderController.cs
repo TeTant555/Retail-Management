@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MODEL.ApplicationConfig;
 using MODEL.DTOs;
+using REPOSITORY.UnitOfWork;
 using System;
 using System.Threading.Tasks;
 
@@ -16,21 +17,22 @@ namespace Retail_Management_API.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService, IUnitOfWork unitOfWork)
         {
             _orderService = orderService;
+            _unitOfWork = unitOfWork;
         }
 
 
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetAllOrders()
         {
             try
             {
                 var response = await _orderService.GetAllOrders();
-                return Ok(new ResponseModel { Message = response.Message, Status = APIStatus.Successful, Data = response.Data });
+                return Ok(new ResponseModel { Message = response is null ? "No orders found" : "Success.", Status = APIStatus.Successful, Data = response });
             }
             catch (Exception ex)
             {
@@ -53,6 +55,19 @@ namespace Retail_Management_API.Controllers
             {
                 return BadRequest(new ResponseModel { Message = ex.Message, Status = APIStatus.SystemError });
 
+            }
+        }
+        [HttpGet("GetByUserId/{id}")]
+        public async Task<IActionResult> GetOrderByUserId(int id)
+        {
+            try
+            {
+                var orders = _unitOfWork.Order.GetByCondition(o => o.UserId == id);
+                return Ok(new ResponseModel { Message = "Success.", Status = APIStatus.Successful, Data = orders });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseModel { Message = ex.Message, Status = APIStatus.SystemError });
             }
         }
 

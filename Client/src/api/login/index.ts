@@ -1,5 +1,5 @@
 import { useMutation, type UseMutationOptions } from '@tanstack/react-query'
-import axios from 'axios'
+import axios from '@/configs/axios'
 
 export const addLogin = {
   useMutation: (opt?: Partial<UseMutationOptions<LoginType, Error, AddLoginType>>) => {

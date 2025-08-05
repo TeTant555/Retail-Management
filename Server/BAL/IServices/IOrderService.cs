@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MODEL.DTOs;
+using MODEL.Entities;
 
 namespace BAL.IServices;
 
 public interface IOrderService
 {
-    Task<OrderResponseDTO> GetAllOrders();
+    Task<IEnumerable<Order>> GetAllOrders();
     Task<OrderResponseDTO> GetOrderById(int id);
     Task<OrderResponseDTO> CreateOrder(OrderRequestDTO requestDTO);
     Task<OrderResponseDTO> UpdateOrder(int id, OrderRequestDTO requestDTO);

@@ -151,10 +151,6 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-
-app.UseAuthentication();
-
-
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
@@ -178,9 +174,11 @@ if (app.Environment.IsDevelopment())
 
 }
 
+app.UseStaticFiles();
 app.UseHttpsRedirection();
-app.UseAuthorization();
 app.UseCors("MyCorsPolicy");
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

@@ -1,6 +1,11 @@
-import { Home, ShoppingCart, PackageSearch, History, LogOut } from "lucide-react"
-import { Link, useNavigate } from "react-router-dom" 
-
+import {
+  Home,
+  ShoppingCart,
+  PackageSearch,
+  History,
+  LogOut,
+} from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -10,8 +15,18 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 import Cookies from "js-cookie";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
+import { Button } from "./ui/button";
 
 // Menu items.
 const items = [
@@ -39,40 +54,68 @@ const items = [
     title: "Logout",
     url: "/login",
     icon: LogOut,
-  }
-]
+  },
+];
 
 export function AppSidebar() {
   const navigate = useNavigate();
   const handleLogout = () => {
     Cookies.remove("template-app-token");
     navigate("/login", { replace: true });
-  }
+  };
 
   return (
     <Sidebar>
       <SidebarContent className="bg-bgu">
         <SidebarGroup className="bg-bgu">
-          <SidebarGroupLabel className="montserrat text-txt text-md">Menu</SidebarGroupLabel>
+          <SidebarGroupLabel className="montserrat text-xl pt-5 pb-7 text-txt">
+            Dashboard
+          </SidebarGroupLabel>
           <SidebarGroupContent className="bg-bgu">
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton className="hover:bg-black active:bg-black"
-                  asChild={item.title !== "Logout"}
-                  onClick={item.title === "Logout" ? handleLogout : undefined}>
                   {item.title === "Logout" ? (
-                    <span className="!text-pri montserrat flex items-center gap-2 cursor-pointer">
-                        <item.icon />
-                        <span className="text-txt">{item.title}</span>
-                      </span>
-                    ) : (
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <SidebarMenuButton className="hover:bg-black active:bg-black">
+                          <span className="!text-pri montserrat flex items-center cursor-pointer">
+                            <item.icon />
+                            <span className="text-txt">{item.title}</span>
+                          </span>
+                        </SidebarMenuButton>
+                      </DialogTrigger>
+                      <DialogContent className="bg-bgu">
+                        <DialogHeader>
+                          <DialogTitle className="text-txt montserrat text-2xl">Confirm Logout</DialogTitle>
+                        </DialogHeader>
+                        <div className="crimson-pro text-lg text-gray-400">Are you sure you want to logout?</div>
+                        <DialogFooter>
+                          <DialogClose asChild>
+                            <Button className="w-23 bg-black montserrat text-xs font-semibold text-pri border-2 border-pri hover:bg-pri hover:text-black transition-colors duration-300">
+                              Cancel
+                            </Button>
+                          </DialogClose>
+                          <Button
+                            className="w-23 bg-black montserrat text-xs font-semibold text-pri border-2 border-pri hover:bg-pri hover:text-black transition-colors duration-300"
+                            onClick={handleLogout}
+                          >
+                            Logout
+                          </Button>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
+                  ) : (
+                    <SidebarMenuButton
+                      className="hover:bg-black active:bg-black"
+                      asChild
+                    >
                       <Link className="!text-pri montserrat" to={item.url}>
                         <item.icon />
                         <span className="text-txt">{item.title}</span>
                       </Link>
-                    )}
-                  </SidebarMenuButton>
+                    </SidebarMenuButton>
+                  )}
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
@@ -80,5 +123,5 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }

@@ -172,13 +172,15 @@ const NewArrival = () => {
                           Close
                         </Button>
                       </DialogClose>
-                      <Button 
-                        disabled={cart.some((item) => item.productId === product.productId)}
-                        className="w-23 bg-black montserrat text-xs font-semibold text-pri border-2 border-pri hover:bg-pri hover:text-black transition-colors duration-300"
-                        onClick={() => handleAddToCart(product)}
-                      >
-                        Confirm
-                      </Button>
+                      <DialogClose>
+                        <Button 
+                          disabled={cart.some((item) => item.productId === product.productId)}
+                          className="w-23 bg-black montserrat text-xs font-semibold text-pri border-2 border-pri hover:bg-pri hover:text-black transition-colors duration-300"
+                          onClick={() => handleAddToCart(product)}
+                        >
+                          Confirm
+                        </Button>
+                      </DialogClose>
                     </DialogFooter>
                   </DialogContent>
                 </Dialog>

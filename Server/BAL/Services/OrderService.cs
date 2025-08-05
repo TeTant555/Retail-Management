@@ -44,6 +44,7 @@ namespace BAL.Services
                 ProductId = product.ProductId,
                 ProductName = product.Name,
                 Quantity = requestDTO.Quantity,
+                UserId = requestDTO.UserId,
                 Price = product.Price ,
                 Profit = product.Profit ,
                 IsOrder = "pending",
@@ -108,17 +109,11 @@ namespace BAL.Services
             };
         }
 
-        public async Task<OrderResponseDTO> GetAllOrders()
+        public async Task<IEnumerable<Order>> GetAllOrders()
         {
             var orders = await _unitOfWork.Order.GetAll();
-            var firstOrder = orders.FirstOrDefault();
 
-            return new OrderResponseDTO
-            {
-                IsSuccess = firstOrder != null,
-                Message = firstOrder != null ? "Orders retrieved." : "No orders found.",
-                Data = firstOrder
-            };
+            return orders;
         }
 
         public async Task<OrderResponseDTO> GetOrderById(int id)
@@ -157,19 +152,19 @@ namespace BAL.Services
             }
 
 
-            
+
 
             order.ProductId = product.ProductId;
 
 
             order.ProductName = product.Name;
-            
+
             order.Quantity = requestDTO.Quantity;
             order.Price = product.Price;
-            order.Profit = product.Profit ;
+            order.Profit = product.Profit;
             order.TotalPrice = product.Price * requestDTO.Quantity;
             order.TotalProfit = product.Profit * requestDTO.Quantity;
-                
+
             _unitOfWork.Order.Update(order);
             int result = await _unitOfWork.SaveAsync();
 

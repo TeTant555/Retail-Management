@@ -23,7 +23,8 @@ public class ConFirmOrderService : IConfirmOrderService
     {
         OrderResponseDTO model = new OrderResponseDTO();
 
-        var order = await _unitOfWork.Order.GetById(id);
+        var order =  await _unitOfWork.Order.GetByIdAsync(id);
+
         if (order == null)
         {
             model.IsSuccess = false;
@@ -33,7 +34,7 @@ public class ConFirmOrderService : IConfirmOrderService
         }
 
        
-        order.IsOrder = "Confirmed";
+        order.IsOrder = "Success";
 
         _unitOfWork.Order.Update(order);
         int result = await _unitOfWork.SaveAsync();
